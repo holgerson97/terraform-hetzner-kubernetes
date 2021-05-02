@@ -1,22 +1,23 @@
-output "resource_group_name" {
+output "firewall_id" {
 
-  value = var.resourcegroup == null ? azurerm_resource_group.main[0].name : var.resourcegroup
-
-}
-output "virtual_network_name" {
-
-  value = azurerm_virtual_network.main[0].name
-
-}
-
-output "subnet_address_prefixes" {
-
-  value = azurerm_subnet.main.*.address_prefixes
+  value = one(hcloud_firewall.main[*].id)
   
 }
 
-output "dns_servers_ip" {
+output "firewall_name" {
 
-  value = var.dns_servers
+  value = one(hcloud_firewall.main[*].name)
+  
+}
 
+output "firewall_rule" {
+
+  value = one(hcloud_firewall.main[*].rule)
+  
+}
+
+output "firewall_labels" {
+
+  value = one(hcloud_firewall.main[*].labels)
+  
 }
