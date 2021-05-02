@@ -90,6 +90,10 @@ resource "hcloud_server" "kub_masters" {
 
   labels = var.labels
 
+  depends_on = [
+    hcloud_network_subnet.nodes
+  ]
+
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server_network
@@ -123,6 +127,10 @@ resource "hcloud_server" "kub_nodes" {
   user_data   = one(data.template_file.user_data[*].rendered)
 
   labels      = var.labels
+
+  depends_on = [
+    hcloud_network_subnet.nodes
+  ]
   
 }
 
