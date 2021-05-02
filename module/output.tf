@@ -141,3 +141,183 @@ output "route_node_to_loadbalancer_gateway" {
   value = one(hcloud_network_route.node_to_loadbalancer[*].gateway)
   
 }
+
+output "kub_master_server_id" {
+
+  value = hcloud_server.kub_masters[*].id
+  
+}
+
+output "kub_master_server_name" {
+
+  value = hcloud_server.kub_masters[*].name
+  
+}
+
+output "kub_master_server_server_type" {
+
+  value = hcloud_server.kub_masters[*].server_type
+  
+}
+
+output "kub_master_server_image" {
+
+  value = hcloud_server.kub_masters[*].image
+  
+}
+
+output "kub_master_server_location" {
+
+  value = hcloud_server.kub_masters[*].location
+  
+}
+
+output "kub_master_server_datacenter" {
+
+  value = hcloud_server.kub_masters[*].datacenter
+  
+}
+
+output "kub_master_server_backup_window" {
+
+  value = hcloud_server.kub_masters[*].backup_window
+  
+}
+
+output "kub_master_server_backups" {
+
+  value = hcloud_server.kub_masters[*].backups
+  
+}
+
+output "kub_master_server_iso" {
+
+  value = hcloud_server.kub_masters[*].iso
+  
+}
+
+output "kub_master_server_ipv4_address" {
+
+  value = hcloud_server.kub_masters[*].ipv4_address
+  
+}
+
+output "kub_master_server_ipv6_address" {
+
+  value = hcloud_server.kub_masters[*].ipv6_address
+  
+}
+
+output "kub_master_server_ipv6_network" {
+
+  value = hcloud_server.kub_masters[*].ipv6_network
+  
+}
+
+output "kub_master_server_status" {
+
+  value = hcloud_server.kub_masters[*].status
+  
+}
+
+output "kub_master_server_ipv4_labels" {
+
+  value = hcloud_server.kub_masters[*].labels
+  
+}
+
+output "kub_master_server_ipv4_network" {
+
+  value = hcloud_server.kub_masters[*].network
+  
+}
+
+output "kub_nodes_server_id" {
+
+  value = hcloud_server.kub_nodes[*].id
+  
+}
+
+output "kub_nodes_server_name" {
+
+  value = hcloud_server.kub_nodes[*].name
+  
+}
+
+output "kub_nodes_server_server_type" {
+
+  value = hcloud_server.kub_nodes[*].server_type
+  
+}
+
+output "kub_nodes_server_image" {
+
+  value = hcloud_server.kub_nodes[*].image
+  
+}
+
+output "kub_nodes_server_location" {
+
+  value = hcloud_server.kub_nodes[*].location
+  
+}
+
+output "kub_nodes_server_datacenter" {
+
+  value = hcloud_server.kub_nodes[*].datacenter
+  
+}
+
+output "kub_nodes_server_backup_window" {
+
+  value = hcloud_server.kub_nodes[*].backup_window
+  
+}
+
+output "kub_nodes_server_backups" {
+
+  value = hcloud_server.kub_nodes[*].backups
+  
+}
+
+output "kub_nodes_server_iso" {
+
+  value = hcloud_server.kub_nodes[*].iso
+  
+}
+
+output "kub_nodes_server_ipv4_address" {
+
+  value = hcloud_server.kub_nodes[*].ipv4_address
+  
+}
+
+output "kub_nodes_server_ipv6_address" {
+
+  value = hcloud_server.kub_nodes[*].ipv6_address
+  
+}
+
+output "kub_nodes_server_ipv6_network" {
+
+  value = hcloud_server.kub_nodes[*].ipv6_network
+  
+}
+
+output "kub_nodes_server_status" {
+
+  value = hcloud_server.kub_nodes[*].status
+  
+}
+
+output "kub_nodes_server_ipv4_labels" {
+
+  value = hcloud_server.kub_nodes[*].labels
+  
+}
+
+output "kub_nodes_server_ipv4_network" {
+
+  value = hcloud_server.kub_nodes[*].network
+  
+}
