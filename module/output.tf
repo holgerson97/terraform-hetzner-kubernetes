@@ -21,3 +21,27 @@ output "firewall_labels" {
   value = one(hcloud_firewall.main[*].labels)
   
 }
+
+output "network_id" {
+
+  value = one(hcloud_network.main[*].id)
+  
+}
+
+output "network_name" {
+
+  value = one(hcloud_network.main[*].name)
+  
+}
+
+output "network_ip_range" {
+
+  value = one(hcloud_network.main[*].ip_range)
+  
+}
+
+output "network_labels" {
+
+  value = one(hcloud_network.main[*].labels)
+  
+}
