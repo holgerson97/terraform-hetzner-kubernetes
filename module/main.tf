@@ -29,8 +29,8 @@ resource "hcloud_network" "main" {
 
   count = var.enabled ? 1 : 0
 
-  name     = var.node_network_name
-  ip_range = var.node_network_range
+  name     = var.kube_network_name
+  ip_range = var.kube_network_range
   
   labels   = var.labels
 
@@ -67,12 +67,12 @@ resource "hcloud_network_route" "node_to_loadbalancer" {
   
   network_id  = one(hcloud_network.main[*].id)
   destination = one(hcloud_network_subnet.loadbalancer[*].ip_range)
-  gateway     = 
+  gateway     = cidrhost(one(hcloud_network_subnet.nodes[*].ip_range), 1)
   
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server
-resource "hcloud_server" "kub-masters" {
+resource "hcloud_server" "kub_masters" {
   count = var.enabled ? var.kub_masters : 0
 
   name        = "kub-master-${sum(count.index, 1)}"
@@ -113,7 +113,7 @@ resource "hcloud_server" "kub_nodes" {
   location    = var.location
   datacenter  = var.datacenter
   server_type = var.server_type_master
-  backups     = var.master_backups
+  backups     = var.nodes_backups
   image       = var.image
   keep_disk   = var.keep_disk
   iso         = var.iso

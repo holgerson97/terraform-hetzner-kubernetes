@@ -4,240 +4,207 @@ variable "enabled" {
 
 }
 
-variable "resourcegroup" {
+variable "labels" {
 
-  description = "Name of your resourcegroup, if not set this module creates a new one."
+  description = "Labels attached to ressources created by this module."
 
-  type    = string
+  type = map(any)
   default = null
 
   sensitive = false
-
+    
 }
-variable "namespace" {
+
+variable "root_ssh_key" {
+
+  description = "Your public SSH key that is going to be attached to the root user by cloud init."
+
+  type = string
+
+  sensitive = true
+  
+}
+
+variable "ansible_ssh_key" {
+
+  description = "Your public SSH key that is going to be attached to the ansible user by cloud init."
+
+  type = string
+
+  sensitive = true
+  
+}
+
+variable "firewall_name" {
+
+  description = "Name of your Firewall."
 
   type    = string
-  default = "default-name"
+  default = "Kube-Firewall"
+  
+  sensitive = false
 
 }
-variable "location" {}
 
-################################ VNET ################################
+variable "firewall_rules" {
 
-variable "vnet_address_spaces" {
+  description = "Specify Firewallrules."
 
-  description = "Virtual network address spaces."
+  type = list(object({
+    direction  = string
+    protocol   = string
+    port       = number
+    source_ips = list(string)
+  })) 
+  default = null
 
-  type    = list(string)
-  default = ["10.10.0.0/16"]
+  sensitive = false
+  
+}
+
+variable "kube_network_name" {
+
+  description = "Specify the name for the network that is going to be connected to your nodes/services."
+
+  type = string
+  default = "Kube-Network"
+
+  sensitive = false
+  
+}
+
+variable "kube_network_range" {
+
+  description = "Specify the IP Range for the network that is going to be connected to your nodes/services."
+
+  type = string
 
   sensitive = false
 
 }
 
-variable "dns_servers" {
+variable "nodes_range" {
 
-  description = "List of DNS servers."
+  description = "Specify the CIDR of the nodes subnet for your nodes."
 
-  type    = list(string)
-  default = ["10.10.1.1", "10.10.1.2"]
+  type = string
+
+  sensitive = false
+  
+}
+
+variable "loadbalancer_range" {
+  
+  description = "Specify the CIDR of the loadbalancer subnet for your servcices."
+
+  type = string
+
+  sensitive = false
+}
+
+variable "location" {
+
+  description = "Specify the location where your resources should be deployed."
+
+  type = string
 
   sensitive = false
 
 }
 
-variable "vm_protection" {
+variable "datacenter" {
 
-  description = "Enables protection for VMs inside the virtual network."
+  description = "Specify the datacenter where your resources should be deployed."
 
-  type    = bool
+  type = string
+
+  sensitive = false
+
+}
+
+variable "server_type_master" {
+
+  description = "Specify the machine type of your master nodes."
+
+  type = string
+
+  sensitive = false
+  
+}
+
+variable "master_backups" {
+
+  description = "Specify if you want to enable backups for your master nodes."
+
+  type = bool
   default = false
 
   sensitive = false
 
 }
 
-variable "ddos_protection" {
+variable "nodes_backups" {
 
-  description = "Enables DDOS protection for the virtual network."
+  description = "Specify if you want to enable backups for your slave nodes."
 
-  type    = bool
+  type = bool
   default = false
 
   sensitive = false
 
 }
 
-############################### Subnet ################################
 
-variable "subnet_address_spaces" {
+variable "image" {
 
-  description = "List of subnet address spaces."
+  description = "Specify the image you want to deploy on your nodes."
 
-  type    = list(string)
-  default = ["10.10.1.0/24"]
+  type = string
 
   sensitive = false
 
 }
 
-variable "private_link_endpoint_policies" {
+variable "keep_disk" {
 
-  description = "Enable NSG for your private link endpoint."
+  description = "Specify if you want to keep disk when downgrading machines."
 
-  type    = bool
+  type = bool
   default = false
 
   sensitive = false
 
 }
 
-variable "private_link_service_policies" {
+variable "iso" {
 
-  description = "Enable NSG for the private link service."
+  description = "Specify the iso used for your machines."
 
-  type    = bool
-  default = false
-
-  sensitive = false
-
-}
-
-variable "service_endpoints" {
-
-  description = "The list of Service endpoints to associate with the subnet."
-
-  type    = list(string)
+  type = string
   default = null
 
   sensitive = false
 
 }
 
-variable "service_endpoint_policy_ids" {
+variable "rescue" {
 
-  description = "The list of IDs of Service Endpoint Policies to associate with the subnet."
+  description = "Specify if you want to enable rescure features for your machines."
 
-  type    = list(string)
+  type = string
   default = null
 
   sensitive = false
-
+  
 }
 
+variable "ssh_keys" {
 
+  description = "List of SSH keys that should be granted root access. Not recommended, use SSH variable insted."
 
-variable "subnets_with_nat_gw" {
-
-  description = "Subnets that are attached to NAT gateways."
-
-  type    = list(string)
+  type = list(string)
   default = null
 
-  sensitive = false
-
-}
-
-variable "public_ip_method" {
-
-  description = "Specify allocation mehtod for NAT gateways."
-
-  type    = string
-  default = "Static"
-
-  sensitive = false
-
-}
-
-variable "public_ip_sku" {
-
-  description = "Specify SKU for public ip addresses."
-
-  type    = string
-  default = "Standard"
-
-  sensitive = false
-
-}
-
-variable "public_ip_version" {
-
-  description = "IP version of public IP addresses."
-
-  type    = string
-  default = "IPv4"
-
-  sensitive = false
-
-}
-
-variable "public_ip_idle_timeouts" {
-
-  description = "Specify TCP idle timouts for public ips."
-
-  type    = number
-  default = 5
-
-  sensitive = false
-
-}
-
-variable "cost_management" {
-
-  description = "If true will create resource to export cost managemnet for this resource group."
-  type        = bool
-  default     = false
-
-  sensitive = false
-
-}
-
-variable "cm_recurrence_type" {
-
-  description = "Set how the costs for the resource group should be exported."
-
-  type    = string
-  default = "Monthly"
-
-  sensitive = false
-
-  #TODO add validation
-
-}
-
-variable "cm_recurrence_period_start" {
-
-  description = "Set the date when to start the recurrence period."
-
-  type    = string
-  default = "2021-05-01T00:00:00Z"
-
-  sensitive = false
-
-  #TODO add validation
-
-}
-
-variable "cm_recurrence_period_end" {
-
-  description = "Set the date when to end the recurrence period."
-
-  type    = string
-  default = "2021-05-01T00:00:00Z"
-
-  sensitive = false
-
-  # TODO add validation
-
-}
-
-variable "tags" {
-
-  description = "Add tags to your resources."
-
-  type    = map(any)
-  default = null
-
-  sensitive = false
-
+  sensitive = true
+  
 }
