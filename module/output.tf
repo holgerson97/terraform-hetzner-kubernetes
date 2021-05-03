@@ -232,92 +232,92 @@ output "kub_master_server_ipv4_network" {
   
 }
 
-output "kub_nodes_server_id" {
+output "kub_slaves_server_id" {
 
-  value = hcloud_server.kub_nodes[*].id
+  value = hcloud_server.kub_slaves[*].id
   
 }
 
-output "kub_nodes_server_name" {
+output "kub_slaves_server_name" {
 
-  value = hcloud_server.kub_nodes[*].name
+  value = hcloud_server.kub_slaves[*].name
   
 }
 
-output "kub_nodes_server_server_type" {
+output "kub_slaves_server_server_type" {
 
-  value = hcloud_server.kub_nodes[*].server_type
+  value = hcloud_server.kub_slaves[*].server_type
   
 }
 
-output "kub_nodes_server_image" {
+output "kub_slaves_server_image" {
 
-  value = hcloud_server.kub_nodes[*].image
+  value = hcloud_server.kub_slaves[*].image
   
 }
 
-output "kub_nodes_server_location" {
+output "kub_slaves_server_location" {
 
-  value = hcloud_server.kub_nodes[*].location
+  value = hcloud_server.kub_slaves[*].location
   
 }
 
-output "kub_nodes_server_datacenter" {
+output "kub_slaves_server_datacenter" {
 
-  value = hcloud_server.kub_nodes[*].datacenter
+  value = hcloud_server.kub_slaves[*].datacenter
   
 }
 
-output "kub_nodes_server_backup_window" {
+output "kub_slaves_server_backup_window" {
 
-  value = hcloud_server.kub_nodes[*].backup_window
+  value = hcloud_server.kub_slaves[*].backup_window
   
 }
 
-output "kub_nodes_server_backups" {
+output "kub_slaves_server_backups" {
 
-  value = hcloud_server.kub_nodes[*].backups
+  value = hcloud_server.kub_slaves[*].backups
   
 }
 
-output "kub_nodes_server_iso" {
+output "kub_slaves_server_iso" {
 
-  value = hcloud_server.kub_nodes[*].iso
+  value = hcloud_server.kub_slaves[*].iso
   
 }
 
-output "kub_nodes_server_ipv4_address" {
+output "kub_slaves_server_ipv4_address" {
 
-  value = hcloud_server.kub_nodes[*].ipv4_address
+  value = hcloud_server.kub_slaves[*].ipv4_address
   
 }
 
-output "kub_nodes_server_ipv6_address" {
+output "kub_slaves_server_ipv6_address" {
 
-  value = hcloud_server.kub_nodes[*].ipv6_address
+  value = hcloud_server.kub_slaves[*].ipv6_address
   
 }
 
-output "kub_nodes_server_ipv6_network" {
+output "kub_slaves_server_ipv6_network" {
 
-  value = hcloud_server.kub_nodes[*].ipv6_network
+  value = hcloud_server.kub_slaves[*].ipv6_network
   
 }
 
-output "kub_nodes_server_status" {
+output "kub_slaves_server_status" {
 
-  value = hcloud_server.kub_nodes[*].status
+  value = hcloud_server.kub_slaves[*].status
   
 }
 
-output "kub_nodes_server_ipv4_labels" {
+output "kub_slaves_server_ipv4_labels" {
 
-  value = hcloud_server.kub_nodes[*].labels
+  value = hcloud_server.kub_slaves[*].labels
   
 }
 
-output "kub_nodes_server_ipv4_network" {
+output "kub_slaves_server_ipv4_network" {
 
-  value = hcloud_server.kub_nodes[*].network
+  value = hcloud_server.kub_slaves[*].network
   
 }

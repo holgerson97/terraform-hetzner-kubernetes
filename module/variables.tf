@@ -117,6 +117,7 @@ variable "datacenter" {
   description = "Specify the datacenter where your resources should be deployed."
 
   type = string
+  default = null
 
   sensitive = false
 
@@ -125,6 +126,16 @@ variable "datacenter" {
 variable "server_type_master" {
 
   description = "Specify the machine type of your master nodes."
+
+  type = string
+
+  sensitive = false
+  
+}
+
+variable "server_type_slaves" {
+
+  description = "Specify the machine type of your slaves nodes."
 
   type = string
 
@@ -153,7 +164,6 @@ variable "nodes_backups" {
   sensitive = false
 
 }
-
 
 variable "image" {
 
@@ -206,5 +216,27 @@ variable "ssh_keys" {
   default = null
 
   sensitive = true
+  
+}
+
+variable "kub_masters" {
+
+  description = "Specify number of master nodes."
+
+  type = number
+  default = 1
+
+  sensitive = false
+  
+}
+
+variable "kub_slaves" {
+
+  description = "Specify number of slave nodes."
+
+  type = number
+  default = 0
+
+  sensitive = false
   
 }

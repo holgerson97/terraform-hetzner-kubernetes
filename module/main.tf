@@ -5,9 +5,9 @@ resource "hcloud_firewall" "main" {
 
   name = var.firewall_name
 
-  dynamic {
+  dynamic "rule" {
 
-    for_each = var.firewall_rules ? length(var.firewall_rules) : []
+    for_each = var.firewall_rules != null ? var.firewall_rules : []
 
     content {
 
@@ -75,7 +75,7 @@ resource "hcloud_network_route" "node_to_loadbalancer" {
 resource "hcloud_server" "kub_masters" {
   count = var.enabled ? var.kub_masters : 0
 
-  name        = "kub-master-${sum(count.index, 1)}"
+  name        = "kub-master-${sum([count.index, 1])}"
   location    = var.location
   datacenter  = var.datacenter
   server_type = var.server_type_master
@@ -86,7 +86,7 @@ resource "hcloud_server" "kub_masters" {
   rescue      = var.rescue
   ssh_keys    = var.ssh_keys
 
-  user_data   = one(data.template_file.user_data[*].rendered)
+  user_data   = data.template_file.user_data[0].rendered
 
   labels = var.labels
 
@@ -110,13 +110,13 @@ resource "hcloud_server_network" "kub_masters" {
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server
-resource "hcloud_server" "kub_nodes" {
-  count = var.enabled ? var.kub_nodes : 0
+resource "hcloud_server" "kub_slaves" {
+  count = var.enabled ? var.kub_slaves : 0
 
-  name        = "kub-nodes-${sum(count.index, 1)}"
+  name        = "kub-slave-${sum([count.index, 1])}"
   location    = var.location
   datacenter  = var.datacenter
-  server_type = var.server_type_master
+  server_type = var.server_type_slaves
   backups     = var.nodes_backups
   image       = var.image
   keep_disk   = var.keep_disk
@@ -124,7 +124,7 @@ resource "hcloud_server" "kub_nodes" {
   rescue      = var.rescue
   ssh_keys    = var.ssh_keys
 
-  user_data   = one(data.template_file.user_data[*].rendered)
+  user_data   = data.template_file.user_data[0].rendered
 
   labels      = var.labels
 
@@ -135,11 +135,11 @@ resource "hcloud_server" "kub_nodes" {
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server_network
-resource "hcloud_server_network" "kub_nodes" {
+resource "hcloud_server_network" "kub_slaves" {
 
-  count = var.enabled ? var.kub_nodes : 0
+  count = var.enabled ? var.kub_slaves : 0
 
-  server_id  = hcloud_server.kub_nodes[count.index].id
+  server_id  = hcloud_server.kub_slaves[count.index].id
   network_id = one(hcloud_network.main[*].id)
   subnet_id  = one(hcloud_network_subnet.nodes[*].id)
 
