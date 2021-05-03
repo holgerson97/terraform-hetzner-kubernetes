@@ -3,36 +3,37 @@ terraform {
 }
 
 terraform {
+  required_version = ">=0.15.0"
   required_providers {
-      required_version = ">=0.15.0"
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = ">=2.42.0"
+    hcloud = {
+      source = "hetznercloud/hcloud"
+      version = "1.26.0"
     }
   }
 }
 
-variable "ARM_CLIENT_ID" {}
-variable "ARM_CLIENT_SECRET" {}
-variable "ARM_SUBSCRIPTION_ID" {}
-variable "ARM_TENANT_ID" {}
+variable "HCLOUD_TOKEN" {} 
 
+provider "hcloud" {
+  
+  token = var.HCLOUD_TOKEN
 
-provider "azurerm" {
-
-  client_id       = var.ARM_CLIENT_ID
-  client_secret   = var.ARM_CLIENT_SECRET
-  subscription_id = var.ARM_SUBSCRIPTION_ID
-  tenant_id       = var.ARM_TENANT_ID
-
-  features {}
 }
 
-module "network" {
+module "kubernetes_cluster" {
 
   source = "../module"
 
-  namespace = "test-network"
-  location  = "West Europe"
+  location           = "nbg1"
+  server_type_master = "cpx11"
+  server_type_slaves = "cx11"
+  image              = "ubuntu-20.04"
+
+  root_ssh_key    = null
+  ansible_ssh_key = null
+
+  kube_network_range = "10.10.0.0/24"
+  nodes_range        = "10.10.1.0/24"
+  loadbalancer_range = "10.10.2.0/24"
 
 }
