@@ -118,30 +118,6 @@ output "subnet_loadbalancer_vswitch_id" {
   
 }
 
-output "route_node_to_loadbalancer_id" {
-
-  value = one(hcloud_network_route.node_to_loadbalancer[*].id)
-  
-}
-
-output "route_node_to_loadbalancer_network_id" {
-
-  value = one(hcloud_network_route.node_to_loadbalancer[*].network_id)
-  
-}
-
-output "route_node_to_loadbalancer_destination" {
-
-  value = one(hcloud_network_route.node_to_loadbalancer[*].destination)
-  
-}
-
-output "route_node_to_loadbalancer_gateway" {
-
-  value = one(hcloud_network_route.node_to_loadbalancer[*].gateway)
-  
-}
-
 output "kub_master_server_id" {
 
   value = hcloud_server.kub_masters[*].id
