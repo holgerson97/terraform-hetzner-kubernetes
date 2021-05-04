@@ -40,7 +40,7 @@ variable "firewall_name" {
   description = "Name of your Firewall."
 
   type    = string
-  default = "Kube-Firewall"
+  default = "-Firewall"
   
   sensitive = false
 
@@ -62,18 +62,18 @@ variable "firewall_rules" {
   
 }
 
-variable "kube_network_name" {
+variable "kub_network_name" {
 
   description = "Specify the name for the network that is going to be connected to your nodes/services."
 
   type = string
-  default = "Kube-Network"
+  default = "-Network"
 
   sensitive = false
   
 }
 
-variable "kube_network_range" {
+variable "kub_network_range" {
 
   description = "Specify the IP Range for the network that is going to be connected to your nodes/services."
 
