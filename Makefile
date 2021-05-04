@@ -64,7 +64,7 @@ terravalidate: ## valdiate terraform configuration
 terraApplyAndDestroy: ## Init, Apply and Destroy Terraform configuration
 	cd examples
 	terraform init
-	terraform apply --auto-approves
+	terraform apply --auto-approve
 	terraform destroy --auto-approve
 
 terra-all: terrafmt terralint terravalidate
