@@ -29,8 +29,8 @@ resource "hcloud_network" "main" {
 
   count = var.enabled ? 1 : 0
 
-  name     = var.kube_network_name
-  ip_range = var.kube_network_range
+  name     = var.kub_network_name
+  ip_range = var.kub_network_range
   
   labels   = var.labels
 
@@ -44,7 +44,7 @@ resource "hcloud_network_subnet" "nodes" {
   network_id   = one(hcloud_network.main[*].id)
   type         = "server"
   ip_range     = var.nodes_range
-  network_zone = "Nodes IPs"
+  network_zone = "eu-central"
   
 }
 
@@ -56,18 +56,7 @@ resource "hcloud_network_subnet" "loadbalancer" {
   network_id   = one(hcloud_network.main[*].id)
   type         = "server"
   ip_range     = var.loadbalancer_range
-  network_zone = "Loadbalancer IPs"
-  
-}
-
-# https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/network_route
-resource "hcloud_network_route" "node_to_loadbalancer" {
-
-  count = var.enabled ? 1 : 0
-  
-  network_id  = one(hcloud_network.main[*].id)
-  destination = one(hcloud_network_subnet.loadbalancer[*].ip_range)
-  gateway     = cidrhost(one(hcloud_network_subnet.nodes[*].ip_range), 1)
+  network_zone = "eu-central"
   
 }
 
@@ -102,7 +91,6 @@ resource "hcloud_server_network" "kub_masters" {
   count = var.enabled ? var.kub_masters : 0
 
   server_id  = hcloud_server.kub_masters[count.index].id
-  network_id = one(hcloud_network.main[*].id)
   subnet_id  = one(hcloud_network_subnet.nodes[*].id)
 
   #TODO assign static
@@ -140,7 +128,6 @@ resource "hcloud_server_network" "kub_slaves" {
   count = var.enabled ? var.kub_slaves : 0
 
   server_id  = hcloud_server.kub_slaves[count.index].id
-  network_id = one(hcloud_network.main[*].id)
   subnet_id  = one(hcloud_network_subnet.nodes[*].id)
 
   #TODO assign static
