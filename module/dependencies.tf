@@ -18,9 +18,10 @@ data "template_file" "user_data" {
     template = file("${path.module}/templates/cloud_init.yml")
 
     vars = {
-        
+
         root_ssh_key    = var.root_ssh_key
         ansible_ssh_key = var.ansible_ssh_key
-        server_passwd   =random_password.main[0].result
+        server_passwd   = random_password.main[0].result
+
     }
 }
