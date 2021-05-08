@@ -10,7 +10,6 @@ users:
 
   - name: ansible
     sudo: ALL=(ALL) NOPASSWD:ALL
-    no_create_home: true
     lock_passwd: true
     shell: /bin/bash
     passwd: ${server_passwd}
