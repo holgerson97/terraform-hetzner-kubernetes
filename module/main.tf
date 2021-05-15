@@ -93,7 +93,7 @@ resource "hcloud_server_network" "kub_masters" {
   server_id = hcloud_server.kub_masters[count.index].id
   subnet_id = one(hcloud_network_subnet.nodes[*].id)
 
-  #TODO assign static
+  ip = cidrhost(one(hcloud_network_subnet.nodes.*.ip_range), count.index)
 
 }
 
@@ -128,7 +128,9 @@ resource "hcloud_server_network" "kub_slaves" {
   count = var.enabled ? var.kub_slaves : 0
 
   server_id = hcloud_server.kub_slaves[count.index].id
-  subnet_id = one(hcloud_network_subnet.nodes[*].id)
+  subnet_id = one(hcloud_network_subnet.nodes.*.id)
+
+  ip = cidrhost(one(hcloud_network_subnet.nodes.*.ip_range), sum(count.index + length(hcloud_server.kub_masters)))
 
   #TODO assign static
 
