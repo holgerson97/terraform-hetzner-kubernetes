@@ -21,7 +21,7 @@ resource "hcloud_firewall" "main" {
   }
 
   labels = var.labels
-  
+
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/network
@@ -31,8 +31,8 @@ resource "hcloud_network" "main" {
 
   name     = var.kub_network_name
   ip_range = var.kub_network_range
-  
-  labels   = var.labels
+
+  labels = var.labels
 
 }
 
@@ -45,7 +45,7 @@ resource "hcloud_network_subnet" "nodes" {
   type         = "server"
   ip_range     = var.nodes_range
   network_zone = "eu-central"
-  
+
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/network_subnet
@@ -57,7 +57,7 @@ resource "hcloud_network_subnet" "loadbalancer" {
   type         = "server"
   ip_range     = var.loadbalancer_range
   network_zone = "eu-central"
-  
+
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server
@@ -75,7 +75,7 @@ resource "hcloud_server" "kub_masters" {
   rescue      = var.rescue
   ssh_keys    = var.ssh_keys
 
-  user_data   = data.template_file.user_data[0].rendered
+  user_data = data.template_file.user_data[0].rendered
 
   labels = var.labels
 
@@ -90,8 +90,8 @@ resource "hcloud_server_network" "kub_masters" {
 
   count = var.enabled ? var.kub_masters : 0
 
-  server_id  = hcloud_server.kub_masters[count.index].id
-  subnet_id  = one(hcloud_network_subnet.nodes[*].id)
+  server_id = hcloud_server.kub_masters[count.index].id
+  subnet_id = one(hcloud_network_subnet.nodes[*].id)
 
   #TODO assign static
 
@@ -112,14 +112,14 @@ resource "hcloud_server" "kub_slaves" {
   rescue      = var.rescue
   ssh_keys    = var.ssh_keys
 
-  user_data   = data.template_file.user_data[0].rendered
+  user_data = data.template_file.user_data[0].rendered
 
-  labels      = var.labels
+  labels = var.labels
 
   depends_on = [
     hcloud_network_subnet.nodes
   ]
-  
+
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/server_network
@@ -127,8 +127,8 @@ resource "hcloud_server_network" "kub_slaves" {
 
   count = var.enabled ? var.kub_slaves : 0
 
-  server_id  = hcloud_server.kub_slaves[count.index].id
-  subnet_id  = one(hcloud_network_subnet.nodes[*].id)
+  server_id = hcloud_server.kub_slaves[count.index].id
+  subnet_id = one(hcloud_network_subnet.nodes[*].id)
 
   #TODO assign static
 

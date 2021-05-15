@@ -8,11 +8,11 @@ variable "labels" {
 
   description = "Labels attached to ressources created by this module."
 
-  type = map(any)
+  type    = map(any)
   default = null
 
   sensitive = false
-    
+
 }
 
 variable "root_ssh_key" {
@@ -22,7 +22,7 @@ variable "root_ssh_key" {
   type = string
 
   sensitive = true
-  
+
 }
 
 variable "ansible_ssh_key" {
@@ -32,7 +32,7 @@ variable "ansible_ssh_key" {
   type = string
 
   sensitive = true
-  
+
 }
 
 variable "firewall_name" {
@@ -41,7 +41,7 @@ variable "firewall_name" {
 
   type    = string
   default = "-Firewall"
-  
+
   sensitive = false
 
 }
@@ -55,22 +55,22 @@ variable "firewall_rules" {
     protocol   = string
     port       = number
     source_ips = list(string)
-  })) 
+  }))
   default = null
 
   sensitive = false
-  
+
 }
 
 variable "kub_network_name" {
 
   description = "Specify the name for the network that is going to be connected to your nodes/services."
 
-  type = string
+  type    = string
   default = "-Network"
 
   sensitive = false
-  
+
 }
 
 variable "kub_network_range" {
@@ -90,11 +90,11 @@ variable "nodes_range" {
   type = string
 
   sensitive = false
-  
+
 }
 
 variable "loadbalancer_range" {
-  
+
   description = "Specify the CIDR of the loadbalancer subnet for your servcices."
 
   type = string
@@ -116,7 +116,7 @@ variable "datacenter" {
 
   description = "Specify the datacenter where your resources should be deployed."
 
-  type = string
+  type    = string
   default = null
 
   sensitive = false
@@ -130,7 +130,7 @@ variable "server_type_master" {
   type = string
 
   sensitive = false
-  
+
 }
 
 variable "server_type_slaves" {
@@ -140,14 +140,14 @@ variable "server_type_slaves" {
   type = string
 
   sensitive = false
-  
+
 }
 
 variable "master_backups" {
 
   description = "Specify if you want to enable backups for your master nodes."
 
-  type = bool
+  type    = bool
   default = false
 
   sensitive = false
@@ -158,7 +158,7 @@ variable "nodes_backups" {
 
   description = "Specify if you want to enable backups for your slave nodes."
 
-  type = bool
+  type    = bool
   default = false
 
   sensitive = false
@@ -179,7 +179,7 @@ variable "keep_disk" {
 
   description = "Specify if you want to keep disk when downgrading machines."
 
-  type = bool
+  type    = bool
   default = false
 
   sensitive = false
@@ -190,7 +190,7 @@ variable "iso" {
 
   description = "Specify the iso used for your machines."
 
-  type = string
+  type    = string
   default = null
 
   sensitive = false
@@ -201,42 +201,42 @@ variable "rescue" {
 
   description = "Specify if you want to enable rescure features for your machines."
 
-  type = string
+  type    = string
   default = null
 
   sensitive = false
-  
+
 }
 
 variable "ssh_keys" {
 
   description = "List of SSH keys that should be granted root access. Not recommended, use SSH variable insted."
 
-  type = list(string)
+  type    = list(string)
   default = null
 
   sensitive = true
-  
+
 }
 
 variable "kub_masters" {
 
   description = "Specify number of master nodes."
 
-  type = number
+  type    = number
   default = 1
 
   sensitive = false
-  
+
 }
 
 variable "kub_slaves" {
 
   description = "Specify number of slave nodes."
 
-  type = number
+  type    = number
   default = 0
 
   sensitive = false
-  
+
 }
