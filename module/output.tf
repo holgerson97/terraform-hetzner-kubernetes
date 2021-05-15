@@ -46,39 +46,75 @@ output "network_labels" {
 
 }
 
-output "subnet_nodes_id" {
+output "subnet_masters_id" {
 
-  value = one(hcloud_network_subnet.nodes[*].id)
-
-}
-
-output "subnet_nodes_network_id" {
-
-  value = one(hcloud_network_subnet.nodes[*].network_id)
+  value = one(hcloud_network_subnet.masters[*].id)
 
 }
 
-output "subnet_nodes_type" {
+output "subnet_masters_network_id" {
 
-  value = one(hcloud_network_subnet.nodes[*].type)
-
-}
-
-output "subnet_nodes_ip_range" {
-
-  value = one(hcloud_network_subnet.nodes[*].ip_range)
+  value = one(hcloud_network_subnet.masters[*].network_id)
 
 }
 
-output "subnet_nodes_network_zone" {
+output "subnet_masters_type" {
 
-  value = one(hcloud_network_subnet.nodes[*].network_zone)
+  value = one(hcloud_network_subnet.masters[*].type)
 
 }
 
-output "subnet_nodes_vswitch_id" {
+output "subnet_masters_ip_range" {
 
-  value = one(hcloud_network_subnet.nodes[*].vswitch_id)
+  value = one(hcloud_network_subnet.masters[*].ip_range)
+
+}
+
+output "subnet_masters_network_zone" {
+
+  value = one(hcloud_network_subnet.masters[*].network_zone)
+
+}
+
+output "subnet_masters_vswitch_id" {
+
+  value = one(hcloud_network_subnet.masters[*].vswitch_id)
+
+}
+
+output "subnet_slaves_id" {
+
+  value = one(hcloud_network_subnet.slaves[*].id)
+
+}
+
+output "subnet_slaves_network_id" {
+
+  value = one(hcloud_network_subnet.slaves[*].network_id)
+
+}
+
+output "subnet_slaves_type" {
+
+  value = one(hcloud_network_subnet.slaves[*].type)
+
+}
+
+output "subnet_slaves_ip_range" {
+
+  value = one(hcloud_network_subnet.slaves[*].ip_range)
+
+}
+
+output "subnet_slaves_network_zone" {
+
+  value = one(hcloud_network_subnet.slaves[*].network_zone)
+
+}
+
+output "subnet_slaves_vswitch_id" {
+
+  value = one(hcloud_network_subnet.slaves[*].vswitch_id)
 
 }
 

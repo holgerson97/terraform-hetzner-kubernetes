@@ -37,13 +37,25 @@ resource "hcloud_network" "main" {
 }
 
 # https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/network_subnet
-resource "hcloud_network_subnet" "nodes" {
+resource "hcloud_network_subnet" "masters" {
 
   count = var.enabled ? 1 : 0
 
   network_id   = one(hcloud_network.main[*].id)
   type         = "server"
-  ip_range     = var.nodes_range
+  ip_range     = var.masters_range
+  network_zone = "eu-central"
+
+}
+
+# https://registry.terraform.io/providers/hetznercloud/hcloud/latest/docs/resources/network_subnet
+resource "hcloud_network_subnet" "slaves" {
+
+  count = var.enabled ? 1 : 0
+
+  network_id   = one(hcloud_network.main[*].id)
+  type         = "server"
+  ip_range     = var.slaves_range
   network_zone = "eu-central"
 
 }
@@ -80,7 +92,7 @@ resource "hcloud_server" "kub_masters" {
   labels = var.labels
 
   depends_on = [
-    hcloud_network_subnet.nodes
+    hcloud_network_subnet.masters
   ]
 
 }
@@ -91,9 +103,9 @@ resource "hcloud_server_network" "kub_masters" {
   count = var.enabled ? var.kub_masters : 0
 
   server_id = hcloud_server.kub_masters[count.index].id
-  subnet_id = one(hcloud_network_subnet.nodes[*].id)
+  subnet_id = one(hcloud_network_subnet.masters[*].id)
 
-  ip = cidrhost(one(hcloud_network_subnet.nodes.*.ip_range), count.index)
+  ip = cidrhost(one(hcloud_network_subnet.masters.*.ip_range), sum([count.index, 1]))
 
 }
 
@@ -117,7 +129,7 @@ resource "hcloud_server" "kub_slaves" {
   labels = var.labels
 
   depends_on = [
-    hcloud_network_subnet.nodes
+    hcloud_network_subnet.slaves
   ]
 
 }
@@ -128,10 +140,8 @@ resource "hcloud_server_network" "kub_slaves" {
   count = var.enabled ? var.kub_slaves : 0
 
   server_id = hcloud_server.kub_slaves[count.index].id
-  subnet_id = one(hcloud_network_subnet.nodes.*.id)
+  subnet_id = one(hcloud_network_subnet.slaves.*.id)
 
-  ip = cidrhost(one(hcloud_network_subnet.nodes.*.ip_range), sum(count.index + length(hcloud_server.kub_masters)))
-
-  #TODO assign static
+  ip = cidrhost(one(hcloud_network_subnet.slaves.*.ip_range), sum([count.index, 1]))
 
 }

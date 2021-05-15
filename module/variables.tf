@@ -83,15 +83,26 @@ variable "kub_network_range" {
 
 }
 
-variable "nodes_range" {
+variable "masters_range" {
 
-  description = "Specify the CIDR of the nodes subnet for your nodes."
+  description = "Specify the CIDR of the masters subnet for your master nodes."
 
   type = string
 
   sensitive = false
 
 }
+
+variable "slaves_range" {
+
+  description = "Specify the CIDR of the slaves subnet for your slaves nodes."
+
+  type = string
+
+  sensitive = false
+
+}
+
 
 variable "loadbalancer_range" {
 
